@@ -12,29 +12,17 @@ print(os.curdir)
 class ChurnPredictor:
 
     def __init__(self):
-        self.model = joblib.load('ml/trained_model/model.pkl')
-        self.threshold = np.load('ml/trained_model/best_threshold.npy')
-        self.scaler = joblib.load('ml/trained_model/scaler.pkl')
-        self.feature_names = joblib.load('ml/trained_model/feature_names.pkl') 
+        self.pipeline = joblib.load(dir + '/ml/trained_model/pipeline.pkl')
+        self.threshold = np.load(dir + '/ml/trained_model/best_threshold.npy') 
 
     def preprocessing(self, data : dict):
-        df = pd.DataFrame([data])
-        df = df.reindex(columns=self.feature_names, fill_value=0)
-        scaled_data = self.scaler.transform(df)
-        return scaled_data 
+        pass 
 
 
     def predict(self, data : dict) -> dict[str, float]:
         
-        print("predict in predictor")
-        scaled = self.preprocessing(data)
-        
-        print("predict_proba")
-
-        predict_proba = self.model.predict_proba(scaled)[0, 1]
-
-        print("predict with threshold")
-
+        df = pd.DataFrame([data])
+        predict_proba = self.pipeline.predict_proba(df)[0, 1]
         predict = int(predict_proba > self.threshold)
 
         return {'churn_probability': float(predict_proba), 'churn_prediction': predict}

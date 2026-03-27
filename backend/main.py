@@ -10,7 +10,6 @@ app.include_router(router)
 
 @app.get("/")
 async def root():
-    print("Hello")
     return {"api" : "service is running..."}
 
 

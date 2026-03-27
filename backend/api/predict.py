@@ -11,7 +11,6 @@ predictor = ChurnPredictor()
 @router.post("/predict",  response_model=ChurnResponse)
 async def predict(request : ChurnRequest):
     try:
-        print("predict")
         result = predictor.predict(request.model_dump())
         return ChurnResponse(**result) 
     except Exception as ex:
