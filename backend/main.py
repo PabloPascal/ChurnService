@@ -1,10 +1,18 @@
 from fastapi import FastAPI
 from api.predict import router
+from database.db_init import init_db
+from contextlib import asynccontextmanager
 import uvicorn
 
 
+@asynccontextmanager
+async def lifespan(app : FastAPI):
+    await init_db() 
+    yield 
 
-app = FastAPI(title="Churn predict service")
+
+
+app = FastAPI(title="Churn predict service", lifespan=lifespan)
 app.include_router(router)
 
 
