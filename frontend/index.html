@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Churn Predictor | Dark Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="container">
+        <div class="card">
+            <h1>🔮 Customer Churn Predictor</h1>
+            <p class="subtitle">Enter customer data to predict the likelihood of churn</p>
+
+            <form id="churnForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="CreditScore">Credit Score</label>
+                        <input type="number" id="CreditScore" name="CreditScore" min="300" max="850" placeholder="300–850" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Age">Age</label>
+                        <input type="number" id="Age" name="Age" min="18" max="100" placeholder="18–100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Tenure">Tenure (years)</label>
+                        <input type="number" id="Tenure" name="Tenure" min="0" max="120" placeholder="0–120" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="Balance">Balance (€)</label>
+                        <input type="number" id="Balance" name="Balance" min="0" step="any" placeholder="0.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="NumOfProducts">Products</label>
+                        <input type="number" id="NumOfProducts" name="NumOfProducts" min="1" max="4" placeholder="1–4" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="EstimatedSalary">Salary (€)</label>
+                        <input type="number" id="EstimatedSalary" name="EstimatedSalary" min="0" step="any" placeholder="0.00" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="HasCrCard">Has Credit Card</label>
+                        <select id="HasCrCard" name="HasCrCard" required>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="IsActiveMember">Active Member</label>
+                        <select id="IsActiveMember" name="IsActiveMember" required>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Geography">Country</label>
+                        <select id="Geography" name="Geography" required>
+                            <option value="France">France</option>
+                            <option value="Germany">Germany</option>
+                            <option value="Spain">Spain</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Gender">Gender</label>
+                        <select id="Gender" name="Gender" required>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" id="predictBtn">
+                    <span>Predict Churn</span>
+                    <svg class="spinner hidden" viewBox="0 0 24 24" width="18" height="18">
+                        <circle class="path" cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"></circle>
+                    </svg>
+                </button>
+            </form>
+
+            <div id="result" class="result hidden">
+                <div class="result-header">📊 Prediction</div>
+                <div class="result-content">
+                    <div class="result-item">
+                        <span class="result-label">Probability of Churn:</span>
+                        <span class="result-value" id="probability">0.00</span><span>%</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Will Churn:</span>
+                        <span class="result-value" id="prediction">No</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="error" class="error hidden"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

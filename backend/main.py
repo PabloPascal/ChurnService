@@ -4,6 +4,10 @@ from database.db_init import init_db
 from contextlib import asynccontextmanager
 import uvicorn
 
+from fastapi.middleware.cors import CORSMiddleware
+
+
+
 
 @asynccontextmanager
 async def lifespan(app : FastAPI):
@@ -19,6 +23,18 @@ app.include_router(router)
 @app.get("/")
 async def root():
     return {"api" : "service is running..."}
+
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],               # для разработки
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 
 
 if __name__ == "__main__":
