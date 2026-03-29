@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: churn_postgres
+    environment:
+      POSTGRES_USER: churn_service
+      POSTGRES_PASSWORD: 1248
+      POSTGRES_DB: churn_service_db
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"  
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U churn_service -d churn_service_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: churn_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://churn_service:1248@postgres/churn_service_db
+      MODELS_DIR: /app/ml/trained_models
+    volumes:
+      - ./backend/ml/trained_models:/app/ml/trained_models
+    # - ./backend:/app
+
+  frontend:
+    build: ./frontend
+    container_name: churn_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  pg_data:
