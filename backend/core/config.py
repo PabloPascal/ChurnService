@@ -1,8 +1,17 @@
 import os 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class Settings:
-    URL_DB = os.getenv("DATABASE_URL", "postgresql+asyncpg://churn_service:1248@localhost/churn_service_db")
+    URL_DB = os.getenv("DATABASE_URL")
+    if URL_DB is None:
+        raise ValueError("DATABASE_URL environment variable is not set")
+
+    # Опциональные переменные можно задать со значением по умолчанию
+    DEBUG: bool = os.getenv("DEBUG", "False").lower() == "true"
+
 
 
 setting = Settings()
