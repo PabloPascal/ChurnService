@@ -6,7 +6,7 @@ services:
     container_name: churn_postgres
     environment:
       POSTGRES_USER: churn_service
-      POSTGRES_PASSWORD: 1248
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: churn_service_db
     volumes:
       - pg_data:/var/lib/postgresql/data
@@ -27,7 +27,7 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql+asyncpg://churn_service:1248@postgres/churn_service_db
+      DATABASE_URL: postgresql+asyncpg://churn_service:${POSTGRES_PASSWORD}@postgres/churn_service_db
       MODELS_DIR: /app/ml/trained_models
     volumes:
       - ./backend/ml/trained_models:/app/ml/trained_models
