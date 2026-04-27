@@ -9,7 +9,7 @@ class Settings:
     if URL_DB is None:
         raise ValueError("DATABASE_URL environment variable is not set")
 
-    # Опциональные переменные можно задать со значением по умолчанию
+
     DEBUG: bool = os.getenv("DEBUG", "False").lower() == "true"
 
 
